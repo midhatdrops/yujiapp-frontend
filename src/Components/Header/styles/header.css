@@ -1,0 +1,17 @@
+.header {
+   background-color: rgba(0, 0, 0, 0);
+   border: 1px solid rgba(236, 236, 236, 0.774);
+   width: 100vw;
+   height: auto;
+   box-sizing: border-box;
+   -webkit-box-shadow: -1px 9px 14px 0px rgba(201, 201, 201, 0.14);
+   -moz-box-shadow: -1px 9px 14px 0px rgba(201, 201, 201, 0.14);
+   box-shadow: -1px 9px 14px 0px rgba(201, 201, 201, 0.14);
+   border-radius: 5px;
+   overflow: hidden;
+}
+
+.dropdown-border {
+   outline: 1px solid rgba(236, 236, 236, 0.774);
+   border-radius: 5px;
+}
