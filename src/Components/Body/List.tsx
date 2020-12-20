@@ -1,5 +1,6 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Axios from 'axios';
+import Post from '../../Controller/Post';
 
 interface List {
    nome: string;
@@ -8,13 +9,15 @@ interface List {
    createdAt: string;
 }
 
-async function GetList<T>(name: string) {
-   let data: T[] = [];
+async function GetList<List>(name: string) {
+   // const [records, setRecords] = useState<List[]>([]);
+   let data: List[] = [];
    try {
-      await Axios.get<Array<T>>(`http://localhost:4200/users/${name}`).then<
-         Array<T>
+      await Axios.get<Array<List>>(`http://localhost:4200/users/${name}`).then<
+         Array<List>
       >((res) => {
          return (data = res.data);
+         //  return setRecords(data)
       });
    } catch (err) {
       console.log(`err.message >>:`, err.message);
@@ -27,12 +30,8 @@ interface RenderProps {
 }
 
 const RenderList: FunctionComponent<RenderProps> = (props: RenderProps) => {
-   const [records, setRecords] = useState<List[]>([]);
    const { nome } = props;
-   const list = async () => {
-      const teste = await GetList<List>(nome);
-      return setRecords(teste);
-   };
+   const [arr, setArr] = useState<List[]>([]);
    const DateTreatment = (timestamp: string) => {
       const date = new Date(parseInt(timestamp) * 1000);
       const day = date.getDay();
@@ -60,10 +59,15 @@ const RenderList: FunctionComponent<RenderProps> = (props: RenderProps) => {
       )} : ${seconds.substr(-2)}`;
       return treatedTime;
    };
-   list();
+   const teste = async () =>
+      await GetList<List>(nome).then((res) => {
+         return setArr(res);
+      });
    return (
       <>
-         {records.map((el) => {
+         <button onClick={() => teste()}>Teste</button>
+         <Post nome={nome} peso={'60'} altura={'1.5'} />
+         {arr.map((el) => {
             return (
                <div key={el.createdAt}>
                   {`${el.nome} - ${el.peso} - ${el.altura} - ${DateTreatment(
